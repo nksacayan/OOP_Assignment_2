@@ -18,26 +18,12 @@ public class AdminControlPanel extends JFrame {
     private JButton buttonShowGroupTotal;
     private JButton buttonShowPositivePercentage;
 
-    // Singleton code
-    private static AdminControlPanel instance;
-
-    private AdminControlPanel() throws HeadlessException {
+    public AdminControlPanel() throws HeadlessException {
         add(contentPanel);
         setTitle("Admin Control Panel");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setVisible(true);
-    }
-
-    public static AdminControlPanel getInstance() {
-        if (instance == null) {
-            synchronized (AdminControlPanel.class) {
-                if (instance == null) {
-                    instance = new AdminControlPanel();
-                }
-            }
-        }
-        return instance;
     }
 
     // Admin control panel functions
