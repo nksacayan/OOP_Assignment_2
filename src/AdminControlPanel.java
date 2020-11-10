@@ -26,7 +26,6 @@ public class AdminControlPanel extends JFrame {
         setVisible(true);
     }
 
-    // Admin control panel functions
     // TODO: Add users
     // TODO: Add userGroups
     // TODO: Update tree when users or groups are added
