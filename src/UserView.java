@@ -9,4 +9,9 @@ public class UserView extends JFrame{
     private JButton buttonPostTweet;
     private JList listNewsFeed;
 
+    // TODO: Display current users you are following
+    // TODO: Display news feed
+    // TODO: Post tweet with text area and button
+    //  Adds message to both followers and own news feed
+    // TODO: Whenever a new message is posted, all followers news list should update automatically
 }
