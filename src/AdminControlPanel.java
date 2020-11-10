@@ -40,4 +40,12 @@ public class AdminControlPanel extends JFrame {
         return instance;
     }
 
+    // Admin control panel functions
+    // TODO: Output total number of users
+    // TODO: Output total number of groups
+    // TODO: output the total number of Tweet messages in all the users’ news feed
+    // TODO: output the percentage of the positive
+    //  Tweet messages in all the users’ news feed (the message containing positive words,
+    //  such as good, great, excellent, etc.) Free free to decide the positive words.
+
 }
