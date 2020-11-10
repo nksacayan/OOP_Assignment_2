@@ -1,6 +1,7 @@
 import javax.swing.*;
+import java.awt.*;
 
-public class AdminControlPanel {
+public class AdminControlPanel extends JFrame{
     private JPanel contentPanel;
     private JTree treeView;
     private JPanel treePanel;
@@ -16,11 +17,19 @@ public class AdminControlPanel {
     private JButton buttonShowGroupTotal;
     private JButton buttonShowPositivePercentage;
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("AdminControlPanel");
-        frame.setContentPane(new AdminControlPanel().contentPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
+    public AdminControlPanel() throws HeadlessException {
+        add(contentPanel);
+        setTitle("Admin Control Panel");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        setVisible(true);
     }
+
+    //    public static void main(String[] args) {
+//        JFrame frame = new JFrame("AdminControlPanel");
+//        frame.setContentPane(new AdminControlPanel().contentPanel);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.pack();
+//        frame.setVisible(true);
+//    }
 }

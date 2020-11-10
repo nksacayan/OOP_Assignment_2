@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class UserView {
+public class UserView extends JFrame{
     private JPanel contentPanel;
     private JTextField textFieldUserID;
     private JButton buttonFollowUser;
@@ -9,11 +9,11 @@ public class UserView {
     private JButton buttonPostTweet;
     private JList listNewsFeed;
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("UserView");
-        frame.setContentPane(new UserView().contentPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-    }
+//    public static void main(String[] args) {
+//        JFrame frame = new JFrame("UserView");
+//        frame.setContentPane(new UserView().contentPanel);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.pack();
+//        frame.setVisible(true);
+//    }
 }
