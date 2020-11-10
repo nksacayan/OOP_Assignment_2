@@ -1,7 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class AdminControlPanel extends JFrame{
+public class AdminControlPanel extends JFrame {
+    // WYSIWYG generated code
     private JPanel contentPanel;
     private JTree treeView;
     private JPanel treePanel;
@@ -17,7 +18,10 @@ public class AdminControlPanel extends JFrame{
     private JButton buttonShowGroupTotal;
     private JButton buttonShowPositivePercentage;
 
-    public AdminControlPanel() throws HeadlessException {
+    // Singleton code
+    private static AdminControlPanel instance;
+
+    private AdminControlPanel() throws HeadlessException {
         add(contentPanel);
         setTitle("Admin Control Panel");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -25,11 +29,15 @@ public class AdminControlPanel extends JFrame{
         setVisible(true);
     }
 
-    //    public static void main(String[] args) {
-//        JFrame frame = new JFrame("AdminControlPanel");
-//        frame.setContentPane(new AdminControlPanel().contentPanel);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.pack();
-//        frame.setVisible(true);
-//    }
+    public static AdminControlPanel getInstance() {
+        if (instance == null) {
+            synchronized (AdminControlPanel.class) {
+                if (instance == null) {
+                    instance = new AdminControlPanel();
+                }
+            }
+        }
+        return instance;
+    }
+
 }
