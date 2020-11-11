@@ -36,6 +36,7 @@ public class AdminControlPanel extends JFrame {
     //  Tweet messages in all the users’ news feed (the message containing positive words,
     //  such as good, great, excellent, etc.) Free free to decide the positive words.
     // Simple pop-up dialogue boxes are sufficient for outputs on buttons
+    // The buttons use the visitor pattern
     // TODO: Select user in tree, then open user view with button
 
 }
