@@ -23,23 +23,27 @@ public class UserView extends JFrame {
 
     public UserView(User user) throws HeadlessException {
         add(contentPanel);
-        setTitle("Admin Control Panel");
+        setTitle(user.toString());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         pack();
         setVisible(true);
-
-        listNewsFeed = new JList(user.getNewsFeedListModel());
-
-        listNewsFeed.setLayoutOrientation(JList.VERTICAL);
-        listCurrentFollowing.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-
         this.user = user;
+
+        listNewsFeed.setModel(user.getNewsFeedListModel());
+        listCurrentFollowing.setModel(user.getFollowingListModel());
 
         buttonPostTweet.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                user.postTweet(textFieldTweetMessage.toString());
+                user.postTweet(textFieldTweetMessage.getText());
                 textFieldTweetMessage.setText("");
+            }
+        });
+        buttonFollowUser.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                user.followUser(textFieldUserID.getText());
+                textFieldUserID.setText("");
             }
         });
     }

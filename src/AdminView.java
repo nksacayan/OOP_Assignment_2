@@ -68,7 +68,6 @@ public class AdminView extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (selectedNode != null && !selectedNode.getAllowsChildren()) {
                     UserView userView = new UserView((User) selectedNode);
-//                    userViews.add(new UserView((User) selectedNode));
                 }
             }
         });

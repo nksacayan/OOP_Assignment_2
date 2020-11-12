@@ -1,11 +1,13 @@
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
+import java.util.Enumeration;
 import java.util.HashSet;
 
 public class Admin {
     // Singleton implementation
     private static Admin instance;
-    private AdminView adminView = new AdminView(this);
     private HashSet<String> userIDHashSet = new HashSet<>();
     private HashSet<String> userGroupIDHashSet = new HashSet<>();
     private DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Root");
@@ -13,6 +15,7 @@ public class Admin {
 
     private Admin() {
         treeModel = new DefaultTreeModel(rootNode, true);
+        AdminView adminView = new AdminView(this);
         adminView.getTreeView().setModel(treeModel);
     }
 
@@ -58,6 +61,26 @@ public class Admin {
         }
         userGroupIDHashSet.add(userGroupID);
         treeModel.insertNodeInto(new UserGroup(userGroupID), parentNode, parentNode.getChildCount());
+    }
+
+    public User findUser(String userID) {
+        TreePath treePath = find(rootNode, userID);
+        if (treePath == null) {
+            return null;
+        }
+        User user = (User) treePath.getLastPathComponent();
+        return user;
+    }
+
+    private TreePath find(DefaultMutableTreeNode root, String s) {
+        Enumeration<TreeNode> e = root.depthFirstEnumeration();
+        while (e.hasMoreElements()) {
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.nextElement();
+            if (node.toString().equalsIgnoreCase(s)) {
+                return new TreePath(node.getPath());
+            }
+        }
+        return null;
     }
 
     public int getNumUsers() {

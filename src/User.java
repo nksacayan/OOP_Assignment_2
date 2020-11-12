@@ -11,7 +11,6 @@ public class User extends DefaultMutableTreeNode implements PropertyChangeListen
     // User is observer to its list of followings
     // User is subject to its list of followers
 
-    private final String EVENT = "tweet";
     private Admin admin;
     private String userID;
     private String tweet = "Default";
@@ -46,8 +45,8 @@ public class User extends DefaultMutableTreeNode implements PropertyChangeListen
 
     // Notifies listeners
     public void postTweet(String tweet) {
-        // TODO: Post tweet
-        support.firePropertyChange(EVENT, this.tweet, tweet);
+        String event = "tweet";
+        support.firePropertyChange(event, this.tweet, tweet);
         this.tweet = tweet;
         newsFeedListModel.addElement(tweet);
 
@@ -61,7 +60,18 @@ public class User extends DefaultMutableTreeNode implements PropertyChangeListen
     }
 
     public void followUser(String userID) {
-        // TODO: Follow function
+        if (userID.equals(this.userID)) {
+            throw new IllegalArgumentException("User: " + userID + " tried to follow self.");
+        }
+        if (followingListModel.contains(userID)) {
+            throw new IllegalArgumentException("User: " + this.userID + " already follows " + userID);
+        }
+        User user = admin.findUser(userID);
+        if (user == null) {
+            throw new IllegalArgumentException("Could not find user");
+        }
+        user.addPropertyChangeListener(this);
+        followingListModel.addElement(user.userID);
     }
 
     @Override
