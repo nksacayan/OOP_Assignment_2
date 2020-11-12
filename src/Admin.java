@@ -1,22 +1,24 @@
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import java.util.HashSet;
 
 public class Admin {
-    private AdminControlPanel adminControlPanel;
-    private HashSet<User> userHashSet;
-    private HashSet<UserGroup> userGroupHashSet;
-
     // Singleton implementation
     private static Admin instance;
+    private AdminView adminView = new AdminView(this);
+    private HashSet<String> userIDHashSet = new HashSet<>();
+    private HashSet<String> userGroupIDHashSet = new HashSet<>();
+    private DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Root");
+    private DefaultTreeModel treeModel;
 
     private Admin() {
-        adminControlPanel = new AdminControlPanel();
-        userHashSet = new HashSet<>();
-        userGroupHashSet = new HashSet<>();
+        treeModel = new DefaultTreeModel(rootNode, true);
+        adminView.getTreeView().setModel(treeModel);
     }
 
     public static Admin getInstance() {
         if (instance == null) {
-            synchronized (AdminControlPanel.class) {
+            synchronized (AdminView.class) {
                 if (instance == null) {
                     instance = new Admin();
                 }
@@ -27,24 +29,43 @@ public class Admin {
 
     // Methods
     public void addUser(String userID) {
-        // TODO: Add users
-
+        if (userIDHashSet.contains(userID)) {
+            throw new RuntimeException("UserID already exists");
+        }
+        userIDHashSet.add(userID);
+        treeModel.insertNodeInto(new User(userID, this), rootNode, rootNode.getChildCount());
     }
 
-    public void addUserGroup() {
-        // TODO: Add userGroups
+    public void addUser(String userID, DefaultMutableTreeNode parentNode) {
+        if (userIDHashSet.contains(userID)) {
+            throw new RuntimeException("UserID already exists");
+        }
+        userIDHashSet.add(userID);
+        treeModel.insertNodeInto(new User(userID, this), parentNode, parentNode.getChildCount());
     }
 
-    public void updateTree() {
-        // TODO: Update tree when users or groups are added
+    public void addUserGroup(String userGroupID) {
+        if (userGroupIDHashSet.contains(userGroupID)) {
+            throw new RuntimeException("UserGroupID already exists");
+        }
+        userGroupIDHashSet.add(userGroupID);
+        treeModel.insertNodeInto(new UserGroup(userGroupID), rootNode, rootNode.getChildCount());
+    }
+
+    public void addUserGroup(String userGroupID, DefaultMutableTreeNode parentNode) {
+        if (userGroupIDHashSet.contains(userGroupID)) {
+            throw new RuntimeException("UserGroupID already exists");
+        }
+        userGroupIDHashSet.add(userGroupID);
+        treeModel.insertNodeInto(new UserGroup(userGroupID), parentNode, parentNode.getChildCount());
     }
 
     public int getNumUsers() {
-        return userHashSet.size();
+        return userIDHashSet.size();
     }
 
     public int getNumUserGroups() {
-        return userGroupHashSet.size();
+        return userGroupIDHashSet.size();
     }
 
     // TODO: get the total number of Tweet messages in all the users’ news feed
