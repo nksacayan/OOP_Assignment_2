@@ -1,7 +1,7 @@
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.ArrayList;
 
-public class UserGroup extends DefaultMutableTreeNode {
+public class UserGroup extends DefaultMutableTreeNode implements Visitable {
     // UserGroup class is a composite structure
     private String userGroupID;
     private ArrayList<User> users = new ArrayList<>();
@@ -14,5 +14,10 @@ public class UserGroup extends DefaultMutableTreeNode {
     @Override
     public String toString() {
         return userGroupID;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visitUserGroup(this);
     }
 }

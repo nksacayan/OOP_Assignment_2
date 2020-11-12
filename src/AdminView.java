@@ -71,6 +71,38 @@ public class AdminView extends JFrame {
                 }
             }
         });
+        buttonShowUserTotal.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int numUsers = admin.getNumUsers();
+                JOptionPane.showMessageDialog(new JFrame(),
+                        "There are " + numUsers + " users.");
+            }
+        });
+        buttonShowGroupTotal.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int numUserGroups = admin.getNumUserGroups();
+                JOptionPane.showMessageDialog(new JFrame(),
+                        "There are " + numUserGroups + " user groups.");
+            }
+        });
+        buttonShowMessagesTotal.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int numTweets = admin.countAllTweets();
+                JOptionPane.showMessageDialog(new JFrame(),
+                        "There are " + numTweets + " total tweets.");
+            }
+        });
+        buttonShowPositivePercentage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                double percentPositive = admin.countPositiveTweets();
+                JOptionPane.showMessageDialog(new JFrame(),
+                        "There are " + percentPositive + "% positive tweets.");
+            }
+        });
     }
 
     public JTree getTreeView() {

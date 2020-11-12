@@ -5,7 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
-public class User extends DefaultMutableTreeNode implements PropertyChangeListener {
+public class User extends DefaultMutableTreeNode implements PropertyChangeListener, Visitable {
     // User class is a leaf of composite
     // User is both and observer and subject
     // User is observer to its list of followings
@@ -46,6 +46,7 @@ public class User extends DefaultMutableTreeNode implements PropertyChangeListen
     // Notifies listeners
     public void postTweet(String tweet) {
         String event = "tweet";
+        tweet = this.userID + ": " + tweet;
         support.firePropertyChange(event, this.tweet, tweet);
         this.tweet = tweet;
         newsFeedListModel.addElement(tweet);
@@ -77,5 +78,10 @@ public class User extends DefaultMutableTreeNode implements PropertyChangeListen
     @Override
     public String toString() {
         return userID;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visitUser(this);
     }
 }

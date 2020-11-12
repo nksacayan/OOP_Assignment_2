@@ -12,6 +12,8 @@ public class Admin {
     private HashSet<String> userGroupIDHashSet = new HashSet<>();
     private DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Root");
     private DefaultTreeModel treeModel;
+    private TweetCounterVisitor tweetCounterVisitor = new TweetCounterVisitor();
+    private PositiveTweetVisitor positiveTweetVisitor = new PositiveTweetVisitor();
 
     private Admin() {
         treeModel = new DefaultTreeModel(rootNode, true);
@@ -76,11 +78,39 @@ public class Admin {
         Enumeration<TreeNode> e = root.depthFirstEnumeration();
         while (e.hasMoreElements()) {
             DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.nextElement();
-            if (node.toString().equalsIgnoreCase(s)) {
+            if (node.toString().equals(s)) {
                 return new TreePath(node.getPath());
             }
         }
         return null;
+    }
+
+    public int countAllTweets() {
+        visitAllNodes(rootNode);
+        int numTweets = tweetCounterVisitor.getNumTweets();
+        tweetCounterVisitor.resetCount();
+        return numTweets;
+    }
+
+    public double countPositiveTweets() {
+        visitAllNodes(rootNode);
+        double percentPositive = positiveTweetVisitor.calculatePercentage();
+        positiveTweetVisitor.resetCount();
+        return percentPositive;
+    }
+
+    private void visitAllNodes(TreeNode node) {
+        if (node.getParent() != null) {
+            Visitable visitable = (Visitable) node;
+            visitable.accept(tweetCounterVisitor);
+            visitable.accept(positiveTweetVisitor);
+        }
+        if (node.getChildCount() >= 0) {
+            for (Enumeration e = node.children(); e.hasMoreElements();) {
+                TreeNode n = (TreeNode) e.nextElement();
+                visitAllNodes(n);
+            }
+        }
     }
 
     public int getNumUsers() {
@@ -90,10 +120,5 @@ public class Admin {
     public int getNumUserGroups() {
         return userGroupIDHashSet.size();
     }
-
-    // TODO: get the total number of Tweet messages in all the users’ news feed
-    // TODO: get the percentage of the positive
-    //  Tweet messages in all the users’ news feed (the message containing positive words,
-    //  such as good, great, excellent, etc.) Free free to decide the positive words.
 
 }

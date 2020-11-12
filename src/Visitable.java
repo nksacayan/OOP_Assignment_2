@@ -1,3 +1,3 @@
 public interface Visitable {
-    void accept();
+    void accept(Visitor visitor);
 }
