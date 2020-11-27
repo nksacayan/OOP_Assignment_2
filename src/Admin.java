@@ -113,6 +113,20 @@ public class Admin {
         }
     }
 
+    public boolean validateIDs() {
+        for (String id : userIDHashSet) {
+            // Test uniqueness of IDs between users and group sets
+            if (userGroupIDHashSet.contains(id)) {
+                return false;
+            }
+            // Test if any ID contains spaces
+            if (id.contains(" ")) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public int getNumUsers() {
         return userIDHashSet.size();
     }

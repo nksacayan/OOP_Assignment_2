@@ -23,6 +23,7 @@ public class AdminView extends JFrame {
     private JButton buttonShowGroupTotal;
     private JButton buttonShowPositivePercentage;
     private JScrollPane treeScrollPane;
+    private JButton buttonValidate;
     private DefaultMutableTreeNode selectedNode;
     private ArrayList<UserView> userViews = new ArrayList<>();
 
@@ -103,20 +104,24 @@ public class AdminView extends JFrame {
                         "There are " + percentPositive + "% positive tweets.");
             }
         });
+        buttonValidate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String message;
+                if (admin.validateIDs()) {
+                    message = "All IDs are valid.";
+                }
+                else {
+                    message = "Not all IDs are valid.";
+                }
+                JOptionPane.showMessageDialog(new JFrame(), message);
+            }
+        });
     }
 
     public JTree getTreeView() {
         return treeView;
     }
 
-    // TODO: Output total number of users
-    // TODO: Output total number of groups
-    // TODO: output the total number of Tweet messages in all the users’ news feed
-    // TODO: output the percentage of the positive
-    //  Tweet messages in all the users’ news feed (the message containing positive words,
-    //  such as good, great, excellent, etc.) Free free to decide the positive words.
-    // Simple pop-up dialogue boxes are sufficient for outputs on buttons
-    // The buttons use the visitor pattern
-    // TODO: Select user in tree, then open user view with button
 
 }

@@ -19,6 +19,7 @@ public class UserView extends JFrame {
     private JPanel followingPanel;
     private JPanel postPanel;
     private JPanel newsPanel;
+    private JTextArea textAreaCreationTime;
     private User user;
 
     public UserView(User user) throws HeadlessException {
@@ -31,6 +32,7 @@ public class UserView extends JFrame {
 
         listNewsFeed.setModel(user.getNewsFeedListModel());
         listCurrentFollowing.setModel(user.getFollowingListModel());
+        textAreaCreationTime.setText("User created at: " + user.getCreationTime());
 
         buttonPostTweet.addActionListener(new ActionListener() {
             @Override
@@ -51,13 +53,6 @@ public class UserView extends JFrame {
     public JList getListCurrentFollowing() {
         return listCurrentFollowing;
     }
-
-    // TODO: Display current users you are following
-    // TODO: Display news feed
-    // TODO: Post tweet with text area and button
-    //  Adds message to both followers and own news feed
-    // TODO: Whenever a new message is posted, all followers news list should update automatically
-
     public JList getListNewsFeed() {
         return listNewsFeed;
     }

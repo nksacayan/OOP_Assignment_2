@@ -14,15 +14,24 @@ public class User extends DefaultMutableTreeNode implements PropertyChangeListen
     private Admin admin;
     private String userID;
     private String tweet = "Default";
+    private long creationTime = System.currentTimeMillis();
+    private long lastUpdatedTime;
     private DefaultListModel<String> followingListModel = new DefaultListModel<>();
     private DefaultListModel<String> newsFeedListModel = new DefaultListModel<>();
     // Observable
     private PropertyChangeSupport support = new PropertyChangeSupport(this);
-
     public User(String userID, Admin admin) {
         this.userID = userID;
         allowsChildren = false;
         this.admin = admin;
+    }
+
+    public long getLastUpdatedTime() {
+        return lastUpdatedTime;
+    }
+
+    public long getCreationTime() {
+        return creationTime;
     }
 
     public DefaultListModel<String> getFollowingListModel() {
@@ -50,6 +59,7 @@ public class User extends DefaultMutableTreeNode implements PropertyChangeListen
         support.firePropertyChange(event, this.tweet, tweet);
         this.tweet = tweet;
         newsFeedListModel.addElement(tweet);
+        updateLastUpdatedTime();
 
     }
 
@@ -58,6 +68,7 @@ public class User extends DefaultMutableTreeNode implements PropertyChangeListen
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         newsFeedListModel.addElement((String) evt.getNewValue());
+        updateLastUpdatedTime();
     }
 
     public void followUser(String userID) {
@@ -83,5 +94,9 @@ public class User extends DefaultMutableTreeNode implements PropertyChangeListen
     @Override
     public void accept(Visitor visitor) {
         visitor.visitUser(this);
+    }
+
+    private void updateLastUpdatedTime() {
+        lastUpdatedTime = System.currentTimeMillis();
     }
 }
