@@ -6,7 +6,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
-public class UserView extends JFrame {
+public class UserView extends JFrame implements PropertyChangeListener {
     private final String EVENT = "tweet";
     private JPanel contentPanel;
     private JTextField textFieldUserID;
@@ -19,26 +19,32 @@ public class UserView extends JFrame {
     private JPanel followingPanel;
     private JPanel postPanel;
     private JPanel newsPanel;
-    private JTextArea textAreaCreationTime;
+    private JLabel creationTimeLabel;
+    private JLabel updateTimeLabel;
+    private JPanel labelPanel;
     private User user;
 
     public UserView(User user) throws HeadlessException {
         add(contentPanel);
         setTitle(user.toString());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        pack();
-        setVisible(true);
         this.user = user;
 
         listNewsFeed.setModel(user.getNewsFeedListModel());
         listCurrentFollowing.setModel(user.getFollowingListModel());
-        textAreaCreationTime.setText("User created at: " + user.getCreationTime());
+        creationTimeLabel.setText("User created at: " + user.getCreationTime());
+        updateTimeLabel.setText("User last updated at: " + user.getLastUpdatedTime());
+        user.addPropertyChangeListener(this);
+
+        pack();
+        setVisible(true);
 
         buttonPostTweet.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 user.postTweet(textFieldTweetMessage.getText());
                 textFieldTweetMessage.setText("");
+                updateTimeLabel.setText("User last updated at: " + user.getLastUpdatedTime());
             }
         });
         buttonFollowUser.addActionListener(new ActionListener() {
@@ -57,4 +63,12 @@ public class UserView extends JFrame {
         return listNewsFeed;
     }
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        System.out.println(evt);
+        if (evt.getPropertyName().equals("update")) {
+            updateTimeLabel.setText("User last updated at: " + user.getLastUpdatedTime());
+            System.out.println("Caught update");
+        }
+    }
 }
