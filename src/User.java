@@ -100,7 +100,8 @@ public class User extends DefaultMutableTreeNode implements PropertyChangeListen
     }
 
     private void updateLastUpdatedTime() {
+        long oldTime = lastUpdatedTime;
         lastUpdatedTime = System.currentTimeMillis();
-        support.firePropertyChange("update", lastUpdatedTime, lastUpdatedTime);
+        support.firePropertyChange("update", oldTime, lastUpdatedTime);
     }
 }
