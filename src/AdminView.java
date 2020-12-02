@@ -24,6 +24,7 @@ public class AdminView extends JFrame {
     private JButton buttonShowPositivePercentage;
     private JScrollPane treeScrollPane;
     private JButton buttonValidate;
+    private JButton buttonGetLastUpdated;
     private DefaultMutableTreeNode selectedNode;
     private ArrayList<UserView> userViews = new ArrayList<>();
 
@@ -115,6 +116,16 @@ public class AdminView extends JFrame {
                     message = "Not all IDs are valid.";
                 }
                 JOptionPane.showMessageDialog(new JFrame(), message);
+            }
+        });
+        buttonGetLastUpdated.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                User lastUpdatedUser = admin.getLastUpdatedUser();
+                if (lastUpdatedUser != null) {
+                    String message = "The last updated user is " + lastUpdatedUser;
+                    JOptionPane.showMessageDialog(new JFrame(), message);
+                }
             }
         });
     }

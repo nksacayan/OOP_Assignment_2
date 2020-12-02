@@ -65,10 +65,8 @@ public class UserView extends JFrame implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println(evt);
         if (evt.getPropertyName().equals("update")) {
             updateTimeLabel.setText("User last updated at: " + user.getLastUpdatedTime());
-            System.out.println("Caught update");
         }
     }
 }

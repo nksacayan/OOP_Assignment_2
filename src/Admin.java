@@ -113,6 +113,16 @@ public class Admin {
         }
     }
 
+    public User getLastUpdatedUser() {
+        User lastUpdatedUser = null;
+        for (String userID : userIDHashSet) {
+            User currentUser = findUser(userID);
+            if (lastUpdatedUser == null || currentUser.getLastUpdatedTime() > lastUpdatedUser.getLastUpdatedTime())
+                lastUpdatedUser = currentUser;
+        }
+        return lastUpdatedUser;
+    }
+
     public boolean validateIDs() {
         for (String id : userIDHashSet) {
             // Test uniqueness of IDs between users and group sets
